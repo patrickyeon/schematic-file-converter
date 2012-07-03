@@ -44,8 +44,23 @@ class Render:
         self.img = Image.new('RGB', (int((maxpt.x - minpt.x) * self.scale),
                                      int((maxpt.y - minpt.y) * self.scale)),
                              self.style['bground'])
-        self.base = Scale(self.scale, FixY(maxpt.y - minpt.y, Shift(-minpt.x,
-                                                                    -minpt.y)))
+
+        class base_xform(XForm):
+            def convert(self, pt):
+                return Point(int((pt.x - minpt.x) * scale),
+                             int((maxpt.y - pt.y) *
+                                 scale))
+            def _copy(self, previous):
+                ret = XForm(previous)
+                # go go monkeypatching!
+                ret.convert = self.convert
+                ret._copy = self._copy
+                return ret
+
+        self.base = base_xform()
+        # replaces the slower
+        #self.base = Scale(self.scale, FixY(maxpt.y - minpt.y, Shift(-minpt.x,
+        #                                                            -minpt.y)))
         self.draw = ImageDraw.Draw(self.img)
 
     def save(self, filename):
