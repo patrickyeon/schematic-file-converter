@@ -91,10 +91,12 @@ class Rectangle(Shape):
 
     @classmethod
     def from_corners(cls, x, y, x2, y2):
-        """ (x, y) is the top left corner, (x2, y2) is the bottom right """
-        width = x2 - x
-        height = y - y2
-        return cls(x, y, width, height)
+        """ (x, y) and (x2, y2) are any two diagonally opposed corners """
+        xmin, xmax = sorted((x, x2))
+        ymin, ymax = sorted((y, y2))
+        width = xmax - xmin
+        height = ymax - ymin
+        return cls(xmin, ymax, width, height)
 
 
     def scale(self, factor):
@@ -168,11 +170,12 @@ class RoundedRectangle(Shape):
 
     @classmethod
     def from_corners(cls, x, y, x2, y2, radius): # pylint: disable=R0913
-        """ x and y are the top left corner of the rectangle, x2 and y2 are the
-        bottom right corner of the rectangle """
-        width = x2 - x
-        height = y - y2
-        return cls(x, y, width, height, radius)
+        """ (x, y) and (x2, y2) are any two diagonally opposed corners """
+        xmin, xmax = sorted((x, x2))
+        ymin, ymax = sorted((y, y2))
+        width = xmax - xmin
+        height = ymax - ymin
+        return cls(xmin, ymax, width, height, radius)
 
 
     def scale(self, factor):
