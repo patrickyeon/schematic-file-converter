@@ -77,25 +77,27 @@ class RectangleTests(unittest.TestCase):
 
     def test_create_rect_from_corners(self):
         '''Test for Rectangle.from_corners()'''
-        rect = Rectangle.from_corners(0, 1, 2, 4)
+        # arguments need to be (left, top, right, bottom)
+        rect = Rectangle.from_corners(0, 4, 2, 1)
         self.assertEqual(rect.x, 0)
-        self.assertEqual(rect.y, 1)
+        self.assertEqual(rect.y, 4)
         self.assertEqual(rect.width, 2)
         self.assertEqual(rect.height, 3)
 
     def test_rectangle_min_point(self):
         '''Test Rectangle.min_point()'''
         rect = Rectangle(-2, -3, 8, 5)
-        top_left = rect.min_point()
-        self.assertEqual(top_left.x, -2)
-        self.assertEqual(top_left.y, -3)
+        bottom_left = rect.min_point()
+        self.assertEqual(bottom_left.x, -2)
+        # Rectangles grow downwards, so ymin = rect.y - rect.height
+        self.assertEqual(bottom_left.y, -8)
 
     def test_rectangle_max_point(self):
         '''Test Rectangle.max_point()'''
         rect = Rectangle(-2, -3, 8, 5)
-        bottom_right = rect.max_point()
-        self.assertEqual(bottom_right.x, 6)
-        self.assertEqual(bottom_right.y, 2)
+        top_right = rect.max_point()
+        self.assertEqual(top_right.x, 6)
+        self.assertEqual(top_right.y, -3)
 
 class RoundedRectangleTests(unittest.TestCase):
     """ The tests of the core module rounded rectangle shape """
@@ -119,9 +121,9 @@ class RoundedRectangleTests(unittest.TestCase):
 
     def test_create_rnd_frm_corners(self):
         '''Test for RoundedRectangle.from_corners()'''
-        rrect = RoundedRectangle.from_corners(0, 1, 2, 4, 5)
+        rrect = RoundedRectangle.from_corners(0, 4, 2, 1, 5)
         self.assertEqual(rrect.x, 0)
-        self.assertEqual(rrect.y, 1)
+        self.assertEqual(rrect.y, 4)
         self.assertEqual(rrect.width, 2)
         self.assertEqual(rrect.height, 3)
         self.assertEqual(rrect.radius, 5)
@@ -129,16 +131,16 @@ class RoundedRectangleTests(unittest.TestCase):
     def test_rrectangle_min_point(self):
         '''Test RoundedRectangle.min_point()'''
         rrect = RoundedRectangle(-2, -3, 8, 5, 6)
-        top_left = rrect.min_point()
-        self.assertEqual(top_left.x, -2)
-        self.assertEqual(top_left.y, -3)
+        bottom_left = rrect.min_point()
+        self.assertEqual(bottom_left.x, -2)
+        self.assertEqual(bottom_left.y, -8)
 
     def test_rrectangle_max_point(self):
         '''Test RoundedRectangle.max_point()'''
         rrect = RoundedRectangle(-2, -3, 8, 5, 6)
-        bottom_right = rrect.max_point()
-        self.assertEqual(bottom_right.x, 6)
-        self.assertEqual(bottom_right.y, 2)
+        top_right = rrect.max_point()
+        self.assertEqual(top_right.x, 6)
+        self.assertEqual(top_right.y, -3)
 
 class ArcTests(unittest.TestCase):
     """ The tests of the core module arc shape """
