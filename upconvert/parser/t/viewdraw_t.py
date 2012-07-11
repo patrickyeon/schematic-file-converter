@@ -154,14 +154,14 @@ class ViewDrawBaseTests(unittest.TestCase):
 
     def test_box(self):
         """ Test for a simple rectangle """
-        k, v = self.base.parse_box('2 8 7 4')
+        k, v = self.base.parse_box('2 4 7 8')
         self.assertEqual(k, 'shape')
         self.assertEqual(v.type, 'rectangle')
         self.assertEqual((v.x, v.y), (2, 8))
         self.assertEqual(v.height, (8 - 4))
         self.assertEqual(v.width, (7 - 2))
 
-        k, v = self.base.parse_box('-5 3 1 -6')
+        k, v = self.base.parse_box('1 3 -5 -6')
         self.assertEqual(k, 'shape')
         self.assertEqual(v.type, 'rectangle')
         self.assertEqual((v.x, v.y), (-5, 3))
