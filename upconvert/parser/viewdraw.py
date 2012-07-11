@@ -164,7 +164,9 @@ class ViewDrawBase:
     def parse_box(self, args):
         """ Returns a parsed box. """
         x1, y1, x2, y2 = [int(a) for a in args.split()]
-        return ('shape', Rectangle.from_corners(x1, y1, x2, y2))
+        xmin, xmax = sorted((x1, x2))
+        ymin, ymax = sorted((y1, y2))
+        return ('shape', Rectangle.from_corners(xmin, ymax, xmax, ymin))
 
     def parse_text(self, args):
         """ Parses a text label and returns as a Shape.Label. """

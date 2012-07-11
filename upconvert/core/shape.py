@@ -80,20 +80,20 @@ class Rectangle(Shape):
     def min_point(self):
         """ Return the min point of the shape """
         return Point(min(self.x, self.x + self.width),
-                     min(self.y, self.y + self.height))
+                     min(self.y, self.y - self.height))
 
 
     def max_point(self):
         """ Return the max point of the shape """
         return Point(max(self.x, self.x + self.width),
-                     max(self.y, self.y + self.height))
+                     max(self.y, self.y - self.height))
 
 
     @classmethod
     def from_corners(cls, x, y, x2, y2):
         """ (x, y) is the top left corner, (x2, y2) is the bottom right """
         width = x2 - x
-        height = y2 - y
+        height = y - y2
         return cls(x, y, width, height)
 
 
@@ -157,21 +157,21 @@ class RoundedRectangle(Shape):
     def min_point(self):
         """ Return the min point of the shape """
         return Point(min(self.x, self.x + self.width),
-                     min(self.y, self.y + self.height))
+                     min(self.y, self.y - self.height))
 
 
     def max_point(self):
         """ Return the max point of the shape """
         return Point(max(self.x, self.x + self.width),
-                     max(self.y, self.y + self.height))
+                     max(self.y, self.y - self.height))
 
 
     @classmethod
     def from_corners(cls, x, y, x2, y2, radius): # pylint: disable=R0913
         """ x and y are the top left corner of the rectangle, x2 and y2 are the
         bottom right corner of the rectangle """
-        width = x2-x
-        height = y2-y
+        width = x2 - x
+        height = y - y2
         return cls(x, y, width, height, radius)
 
 
